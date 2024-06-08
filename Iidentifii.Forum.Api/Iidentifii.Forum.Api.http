@@ -1,0 +1,6 @@
+@Iidentifii.Forum.Api_HostAddress = http://localhost:5252
+
+GET {{Iidentifii.Forum.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
