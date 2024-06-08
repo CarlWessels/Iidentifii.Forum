@@ -1,7 +1,6 @@
 ﻿namespace Iidentifii.Forum.Api.EndPoints.POC
 {
-    public class Request
+    public class POCResponse
     {
-        public int Id { get; set; }
     }
 }

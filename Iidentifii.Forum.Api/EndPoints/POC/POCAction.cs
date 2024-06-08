@@ -1,16 +1,19 @@
 ﻿using FastEndpoints;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Iidentifii.Forum.Api.EndPoints.POC
 {
-    public class Action : Endpoint<Request, Response>
+    //[Authorize(Roles = "User")]
+    public class POCAction : Endpoint<POCRequest, POCResponse>
     {
         public override void Configure()
         {
             Post("/api/POC/create");
-            AllowAnonymous();
+            Roles("Moderator");
         }
+    
 
-        public override async Task HandleAsync(Request req, CancellationToken ct)
+        public override async Task HandleAsync(POCRequest req, CancellationToken ct)
         {
             await SendAsync(new()
             {
