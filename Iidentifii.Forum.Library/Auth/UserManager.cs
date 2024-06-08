@@ -4,11 +4,12 @@ using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 using System.Text;
 using Dapper;
+using Iidentifii.Forum.Library.Database;
 using Iidentifii.Forum.Library.Models;
 
-namespace Iidentifii.Forum.Library
+namespace Iidentifii.Forum.Library.Auth
 {
-    public class UserManager: IUserManager
+    public class UserManager : IUserManager
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
 

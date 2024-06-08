@@ -66,6 +66,8 @@
     <Build Include="Tables\User.sql" />
     <Build Include="StoredProcedures\UserCreate.sql" />
     <Build Include="Functions\UserLogin_TVF.sql" />
+    <Build Include="StoredProcedures\SubforumCreate.sql" />
+    <Build Include="StoredProcedures\PostCreate.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="local.publish.xml" />

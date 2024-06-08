@@ -1,10 +1,10 @@
 ﻿using FastEndpoints;
 using Iidentifii.Forum.Api.EndPoints.POC;
-using Iidentifii.Forum.Library;
+using Iidentifii.Forum.Library.Auth;
 
 namespace Iidentifii.Forum.Api.EndPoints.User.Login
 {
-    public class Action : Endpoint<LoginRequest, LoginResponse>
+    public class Action : BaseAction<LoginRequest, LoginResponse>
     {
         private IUserManager _userManager;
         private ITokenService _tokenService;
@@ -17,7 +17,7 @@ namespace Iidentifii.Forum.Api.EndPoints.User.Login
 
         public override void Configure()
         {
-            Post("/api/user/login");
+            Get("/api/user/login");
             AllowAnonymous();
         }
 
@@ -27,8 +27,13 @@ namespace Iidentifii.Forum.Api.EndPoints.User.Login
             {
                 var user = _userManager.Login(req.Email, req.Password);
                 if (user?.Id == null)
+                {
+                    AddError("Incorrect username of password");
                     await SendErrorsAsync(404, ct);
-                var token = _tokenService.GenerateToken(user!.Id!.Value, user!.Role);
+                    return;
+                }
+
+                var token = _tokenService.GenerateToken(user!.Id!.Value, user!.Role!);
                 await SendAsync(new()
                 {
                     Token = token.ToString(),

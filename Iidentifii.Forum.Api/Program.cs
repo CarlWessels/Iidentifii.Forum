@@ -1,6 +1,9 @@
 using FastEndpoints;
 using FastEndpoints.Security;
-using Iidentifii.Forum.Library;
+using Iidentifii.Forum.Library.Auth;
+using Iidentifii.Forum.Library.Database;
+using Iidentifii.Forum.Library.Posts;
+using Iidentifii.Forum.Library.Subforums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -46,7 +49,9 @@ builder.Services.AddEndpointsApiExplorer()
     
     .AddScoped<ITokenService, TokenService>()
     .AddScoped<IUserManager, UserManager>()
+    .AddScoped<IPostService, PostService>()
     .AddSingleton<IDbConnectionFactory, DbConnectionFactory>()
+    .AddSingleton<ISubforumService, SubformuService>()
 
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

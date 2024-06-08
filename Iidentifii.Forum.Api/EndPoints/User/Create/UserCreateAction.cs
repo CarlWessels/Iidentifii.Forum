@@ -1,13 +1,13 @@
 ﻿using FastEndpoints;
-using Iidentifii.Forum.Library;
+using Iidentifii.Forum.Library.Auth;
 
 namespace Iidentifii.Forum.Api.EndPoints.User.Create
 {
-    public class CreateAction : Endpoint<CreateRequest, CreateResponse>
+    public class UserCreateAction : BaseAction<UserCreateRequest, UserCreateResponse>
     {
         private IUserManager _userManager;
 
-        public CreateAction(IUserManager userManager)
+        public UserCreateAction(IUserManager userManager)
         {
             _userManager = userManager;
         }
@@ -18,7 +18,7 @@ namespace Iidentifii.Forum.Api.EndPoints.User.Create
             AllowAnonymous();
         }
 
-        public override async Task HandleAsync(CreateRequest req, CancellationToken ct)
+        public override async Task HandleAsync(UserCreateRequest req, CancellationToken ct)
         {
 
             try

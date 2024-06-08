@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
 using System.Collections;
-namespace Iidentifii.Forum.Library
+namespace Iidentifii.Forum.Library.Auth
 {
     public class TokenService(IConfiguration configuration) : ITokenService
     {

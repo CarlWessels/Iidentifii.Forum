@@ -1,10 +1,10 @@
 ﻿using FastEndpoints;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Iidentifii.Forum.Api.EndPoints.POC
 {
-    //[Authorize(Roles = "User")]
-    public class POCAction : Endpoint<POCRequest, POCResponse>
+    public class POCAction : BaseAction<POCRequest, POCResponse>
     {
         public override void Configure()
         {

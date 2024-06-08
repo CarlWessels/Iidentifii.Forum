@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Iidentifii.Forum.Library
+namespace Iidentifii.Forum.Library.Database
 {
     public class DbConnectionFactory : IDbConnectionFactory
     {
@@ -15,7 +15,7 @@ namespace Iidentifii.Forum.Library
 
         public DbConnectionFactory(IConfiguration configuration)
         {
-            _connectionString = configuration?.GetConnectionString("Default") 
+            _connectionString = configuration?.GetConnectionString("Default")
                 ?? throw new NotImplementedException("Default database connectionstring not found");
         }
 
