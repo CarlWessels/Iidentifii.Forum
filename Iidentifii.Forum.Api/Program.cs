@@ -1,7 +1,9 @@
 using FastEndpoints;
 using FastEndpoints.Security;
 using Iidentifii.Forum.Library.Auth;
+using Iidentifii.Forum.Library.Comments;
 using Iidentifii.Forum.Library.Database;
+using Iidentifii.Forum.Library.Likes;
 using Iidentifii.Forum.Library.Posts;
 using Iidentifii.Forum.Library.Subforums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -50,6 +52,9 @@ builder.Services.AddEndpointsApiExplorer()
     .AddScoped<ITokenService, TokenService>()
     .AddScoped<IUserManager, UserManager>()
     .AddScoped<IPostService, PostService>()
+    .AddScoped<ICommentService, CommentService>()
+    .AddScoped<ILikeService, LikeService>()
+
     .AddSingleton<IDbConnectionFactory, DbConnectionFactory>()
     .AddSingleton<ISubforumService, SubformuService>()
 

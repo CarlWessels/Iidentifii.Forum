@@ -23,7 +23,7 @@ namespace Iidentifii.Forum.Api.EndPoints.User.Create
 
             try
             {
-                var userId = _userManager.Create(req.User, req.Password);
+                var userId = _userManager.Create(req.Name, req.Email, req.Password);
 
                 await SendAsync(new()
                 {

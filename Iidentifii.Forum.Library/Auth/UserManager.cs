@@ -18,7 +18,7 @@ namespace Iidentifii.Forum.Library.Auth
             _dbConnectionFactory = dbConnectionFactory;
         }
 
-        public User? Login(string email, string password)
+        public (int, string)? Login(string email, string password)
         {
             using (var connection = _dbConnectionFactory.CreateConnection())
             {
@@ -29,18 +29,20 @@ namespace Iidentifii.Forum.Library.Auth
                        Password = password
                    },
                 commandType: CommandType.Text).SingleOrDefault();
-                return user;
+                if (user == null)
+                    return default;
+                return (user.Id!.Value!, user.Role!);
             }
         }
 
-        public int Create(User user, string password)
+        public int Create(string name, string email, string password)
         {
             using (var connection = _dbConnectionFactory.CreateConnection())
             {
                 var sql = "EXEC UserCreate @Name, @Email, @Password, @Id OUTPUT";
                 var parameters = new DynamicParameters();
-                parameters.Add("Name", user.Name);
-                parameters.Add("Email", user.Email);
+                parameters.Add("Name", name);
+                parameters.Add("Email", email);
                 parameters.Add("Password", password);
                 parameters.Add("Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 connection.Execute(sql, parameters);

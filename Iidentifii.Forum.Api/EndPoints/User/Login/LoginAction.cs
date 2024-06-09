@@ -26,14 +26,14 @@ namespace Iidentifii.Forum.Api.EndPoints.User.Login
             try
             {
                 var user = _userManager.Login(req.Email, req.Password);
-                if (user?.Id == null)
+                if (user?.Item1 == null)
                 {
                     AddError("Incorrect username of password");
                     await SendErrorsAsync(404, ct);
                     return;
                 }
 
-                var token = _tokenService.GenerateToken(user!.Id!.Value, user!.Role!);
+                var token = _tokenService.GenerateToken(user!.Value.Item1, user!.Value.Item2);
                 await SendAsync(new()
                 {
                     Token = token.ToString(),

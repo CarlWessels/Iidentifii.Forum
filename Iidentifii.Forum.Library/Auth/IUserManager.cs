@@ -9,8 +9,8 @@ namespace Iidentifii.Forum.Library.Auth
 {
     public interface IUserManager
     {
-        User? Login(string email, string password);
-        int Create(User user, string password);
+        (int, string)? Login(string email, string password);
+        int Create(string name, string email , string password);
 
         void ResetPassword();
     }

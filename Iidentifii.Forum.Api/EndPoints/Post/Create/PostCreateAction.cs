@@ -7,11 +7,11 @@ using System.Security.Claims;
 
 namespace Iidentifii.Forum.Api.EndPoints.Post.Create
 {
-    public class Action : BaseAction<PostCreateRequest, PostCreateResponse>
+    public class PostCreateAction : BaseAction<PostCreateRequest, PostCreateResponse>
     {
         private IPostService _postService;
 
-        public Action(IPostService postService)
+        public PostCreateAction(IPostService postService)
         {
             _postService = postService;
         }
