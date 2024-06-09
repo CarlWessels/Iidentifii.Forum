@@ -70,7 +70,7 @@
     <Build Include="StoredProcedures\PostCreate.sql" />
     <Build Include="Tables\Comment.sql" />
     <Build Include="StoredProcedures\CommentCreate.sql" />
-    <Build Include="StoredProcedures\GetPost.sql" />
+    <Build Include="StoredProcedures\PostGet.sql" />
     <Build Include="Tables\Like.sql" />
     <Build Include="StoredProcedures\LikeOrUnlike.sql" />
   </ItemGroup>

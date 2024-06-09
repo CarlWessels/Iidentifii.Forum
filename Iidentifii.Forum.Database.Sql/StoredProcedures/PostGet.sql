@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.GetPost
+﻿CREATE PROCEDURE dbo.PostGet
 (
     @PostId INT,
     @PageNumber INT,
