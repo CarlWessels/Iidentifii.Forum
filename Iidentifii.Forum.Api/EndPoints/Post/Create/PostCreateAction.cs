@@ -21,20 +21,13 @@ namespace Iidentifii.Forum.Api.EndPoints.Post.Create
             Post("/api/post/create");
             Roles("User", "Moderator", "Owner");
         }
-        public override async Task HandleAsync(PostCreateRequest req, CancellationToken ct)
+        public override async Task HandleAsyncImpl(PostCreateRequest req, CancellationToken ct)
         {
-            try
+            var postId = _postService.Create(req.SubforumId, req.Title, req.Content, UserId);
+            await SendAsync(new()
             {
-                var postId = _postService.Create(req.SubforumId, req.Title, req.Content, UserId);
-                await SendAsync(new()
-                {
-                    Id = postId
-                }, cancellation: ct) ;
-            }
-            catch
-            {
-                await SendErrorsAsync(500, ct);
-            }
+                Id = postId
+            }, cancellation: ct);
         }
     }
 }

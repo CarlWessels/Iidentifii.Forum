@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 using System.Text;
+using System.Xml.Linq;
 using Dapper;
 using Iidentifii.Forum.Library.Database;
 using Iidentifii.Forum.Library.Models;
@@ -54,6 +55,17 @@ namespace Iidentifii.Forum.Library.Auth
         public void ResetPassword()
         {
             throw new NotImplementedException();
+        }
+
+        public void CreateModerator(int userId)
+        {
+            using (var connection = _dbConnectionFactory.CreateConnection())
+            {
+                var sql = "EXEC ModeratorCreate @UserId";
+                var parameters = new DynamicParameters();
+                parameters.Add("UserId", userId);
+                connection.Execute(sql, parameters);
+            }
         }
     }
 }

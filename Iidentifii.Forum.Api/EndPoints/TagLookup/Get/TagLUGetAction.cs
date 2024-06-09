@@ -17,22 +17,13 @@ namespace Iidentifii.Forum.Api.EndPoints.TagLookup.Get
             Get("/api/taglookup/get");
             AllowAnonymous();
         }
-        public override async Task HandleAsync(TagLUGetRequest req, CancellationToken ct)
+        public override async Task HandleAsyncImpl(TagLUGetRequest req, CancellationToken ct)
         {
-            try
+            var tagLUs = _tagService.GetTagLUs();
+            await SendAsync(new()
             {
-                var tagLUs = _tagService.GetTagLUs();
-                await SendAsync(new()
-                {
-                    TagLookups = tagLUs
-                }, cancellation: ct);
-            }
-            catch (Exception ex)
-            {
-                AddError(ex.Message);
-                await SendErrorsAsync(500, ct);
-            }
+                TagLookups = tagLUs
+            }, cancellation: ct);
         }
-
     }
 }

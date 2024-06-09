@@ -1,5 +1,6 @@
 ﻿using FastEndpoints;
 using Iidentifii.Forum.Api.EndPoints.Post.Create;
+using Iidentifii.Forum.Api.EndPoints.User.Create;
 using System.Security.Claims;
 
 namespace Iidentifii.Forum.Api.EndPoints
@@ -15,5 +16,22 @@ namespace Iidentifii.Forum.Api.EndPoints
                 throw new Exception("Unable to determine UserId");
             return userId;
         }
+
+        public override async Task HandleAsync(TRequest req, CancellationToken ct)
+        {
+
+            try
+            {
+                await HandleAsyncImpl(req, ct);
+            }
+            catch (Exception ex)
+            {
+                AddError(ex.Message);
+                await SendErrorsAsync(500, ct);
+            }
+        }
+
+        public abstract Task HandleAsyncImpl(TRequest req, CancellationToken ct);
+        
     }
 }

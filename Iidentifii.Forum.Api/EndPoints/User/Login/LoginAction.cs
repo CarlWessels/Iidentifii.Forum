@@ -21,28 +21,21 @@ namespace Iidentifii.Forum.Api.EndPoints.User.Login
             AllowAnonymous();
         }
 
-        public override async Task HandleAsync(LoginRequest req, CancellationToken ct)
+        public override async Task HandleAsyncImpl(LoginRequest req, CancellationToken ct)
         {
-            try
+            var user = _userManager.Login(req.Email, req.Password);
+            if (user?.Item1 == null)
             {
-                var user = _userManager.Login(req.Email, req.Password);
-                if (user?.Item1 == null)
-                {
-                    AddError("Incorrect username of password");
-                    await SendErrorsAsync(404, ct);
-                    return;
-                }
+                AddError("Incorrect username of password");
+                await SendErrorsAsync(404, ct);
+                return;
+            }
 
-                var token = _tokenService.GenerateToken(user!.Value.Item1, user!.Value.Item2);
-                await SendAsync(new()
-                {
-                    Token = token.ToString(),
-                }, cancellation: ct);
-            }
-            catch
+            var token = _tokenService.GenerateToken(user!.Value.Item1, user!.Value.Item2);
+            await SendAsync(new()
             {
-                await SendErrorsAsync(500, ct);
-            }
+                Token = token.ToString(),
+            }, cancellation: ct);
         }
     }
 }

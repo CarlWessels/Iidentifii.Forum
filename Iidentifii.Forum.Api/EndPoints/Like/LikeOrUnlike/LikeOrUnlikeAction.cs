@@ -17,8 +17,8 @@ namespace Iidentifii.Forum.Api.EndPoints.Like.LikeOrUnlike
             Put("/api/like/likeorunlike");
             Roles("Moderator", "User", "Owner");
         }
-
-        public override async Task HandleAsync(LikeOrUnlikeRequest req, CancellationToken ct)
+     
+        public override async Task HandleAsyncImpl(LikeOrUnlikeRequest req, CancellationToken ct)
         {
             _likeService.LikeOrUnlike(req.PostId, UserId);
             await SendAsync(new()

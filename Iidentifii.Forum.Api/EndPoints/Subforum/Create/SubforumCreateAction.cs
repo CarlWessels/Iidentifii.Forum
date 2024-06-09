@@ -18,9 +18,8 @@ namespace Iidentifii.Forum.Api.EndPoints.Subforum.Create
             Roles("Moderator", "Owner");
         }
 
-        public override async Task HandleAsync(SubforumCreateRequest req, CancellationToken ct)
+        public override async Task HandleAsyncImpl(SubforumCreateRequest req, CancellationToken ct)
         {
-
             try
             {
                 var subforumId = _subformService.Create(req.Name, req.Description);
@@ -28,9 +27,9 @@ namespace Iidentifii.Forum.Api.EndPoints.Subforum.Create
                 await SendAsync(new()
                 {
                     Id = subforumId
-                }, cancellation: ct) ;
+                }, cancellation: ct);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 AddError(ex.Message);
                 await SendErrorsAsync(500, ct);

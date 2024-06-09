@@ -12,10 +12,16 @@ BEGIN
         RETURN;
     END
 
-
-    IF EXISTS (SELECT 1 FROM Tag WHERE Id = @PostId AND TagId = @TagId)
+    IF NOT EXISTS (SELECT 1 FROM Tag WHERE Id = @TagId)
     BEGIN
-        RAISERROR('Post already tagged', 16, 1);
+        RAISERROR('Unable to find tag', 16, 1);
+        RETURN;
+    END
+
+
+    IF EXISTS (SELECT 1 FROM Tag WHERE PostId = @PostId AND TagId = @TagId)
+    BEGIN
+        RAISERROR('Post already tagged with this tag', 16, 1);
         RETURN;
     END
 

@@ -18,20 +18,14 @@ namespace Iidentifii.Forum.Api.EndPoints.Comment.Create
             Post("/api/comment/create");
             Roles("User", "Moderator", "Owner");
         }
-        public override async Task HandleAsync(CommentCreateRequest req, CancellationToken ct)
+
+        public override async Task HandleAsyncImpl(CommentCreateRequest req, CancellationToken ct)
         {
-            try
+            var commentId = _commentService.CreateComment(req.PostId, req.Comment, UserId);
+            await SendAsync(new()
             {
-                var commentId = _commentService.CreateComment(req.PostId, req.Comment, UserId);
-                await SendAsync(new()
-                {
-                    Id  = commentId
-                }, cancellation: ct);
-            }
-            catch
-            {
-                await SendErrorsAsync(500, ct);
-            }
+                Id = commentId
+            }, cancellation: ct);
         }
     }
 }

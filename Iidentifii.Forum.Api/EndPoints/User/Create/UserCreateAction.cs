@@ -17,23 +17,15 @@ namespace Iidentifii.Forum.Api.EndPoints.User.Create
             Post("/api/user/create");
             AllowAnonymous();
         }
+       
 
-        public override async Task HandleAsync(UserCreateRequest req, CancellationToken ct)
+        public override async Task HandleAsyncImpl(UserCreateRequest req, CancellationToken ct)
         {
+            var userId = _userManager.Create(req.Name, req.Email, req.Password);
 
-            try
+            await SendAsync(new()
             {
-                var userId = _userManager.Create(req.Name, req.Email, req.Password);
-
-                await SendAsync(new()
-                {
-                    Success = true
-                }, cancellation: ct);
-            }
-            catch
-            {
-                await SendErrorsAsync(500, ct);
-            }
+            }, cancellation: ct);
         }
     }
 }

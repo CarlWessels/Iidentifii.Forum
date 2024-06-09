@@ -12,8 +12,7 @@ namespace Iidentifii.Forum.Api.EndPoints.POC
             Roles("Moderator");
         }
     
-
-        public override async Task HandleAsync(POCRequest req, CancellationToken ct)
+        public override async Task HandleAsyncImpl(POCRequest req, CancellationToken ct)
         {
             await SendAsync(new()
             {

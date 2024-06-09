@@ -18,21 +18,13 @@ namespace Iidentifii.Forum.Api.EndPoints.Post.Get
             AllowAnonymous();
         }
 
-        public override async Task HandleAsync(PostGetRequest req, CancellationToken ct)
+        public override async Task HandleAsyncImpl(PostGetRequest req, CancellationToken ct)
         {
-            try
+            var output = _postService.Get(req.PostId, req.PageNumber, req.PageSize, req.SortingOptions, req.SortingDirection, req.FilterOptions);
+            await SendAsync(new()
             {
-                var output = _postService.Get(req.PostId, req.PageNumber, req.PageSize, req.SortingOptions, req.SortingDirection, req.FilterOptions);
-
-                await SendAsync(new()
-                {
-                    Data = output
-                }, cancellation: ct);
-            }
-            catch
-            {
-                await SendErrorsAsync(500, ct);
-            }
+                Data = output
+            }, cancellation: ct);
         }
     }
 }

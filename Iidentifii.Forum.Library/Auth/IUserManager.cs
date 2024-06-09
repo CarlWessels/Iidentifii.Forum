@@ -13,5 +13,6 @@ namespace Iidentifii.Forum.Library.Auth
         int Create(string name, string email , string password);
 
         void ResetPassword();
+        void CreateModerator(int userId);
     }
 }

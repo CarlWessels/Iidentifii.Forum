@@ -18,21 +18,13 @@ namespace Iidentifii.Forum.Api.EndPoints.Tag.Create
             Roles("Moderator", "Owner");
         }
 
-        public override async Task HandleAsync(TagCreateRequest req, CancellationToken ct)
+        public override async Task HandleAsyncImpl(TagCreateRequest req, CancellationToken ct)
         {
-            try
-            {
-                 _tagService.Create(req.PostId, req.TagId, UserId);
+            _tagService.Create(req.PostId, req.TagId, UserId);
 
-                await SendAsync(new()
-                {
-                }, cancellation: ct);
-            }
-            catch (Exception ex)
+            await SendAsync(new()
             {
-                AddError(ex.Message);
-                await SendErrorsAsync(500, ct);
-            }
+            }, cancellation: ct);
         }
     }
 }
