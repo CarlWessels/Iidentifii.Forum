@@ -1,6 +1,6 @@
 ﻿namespace Iidentifii.Forum.Api.EndPoints.POC
 {
-    public class POCResponse
+    public class POCResponse : BaseResponse
     {
     }
 }

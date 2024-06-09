@@ -25,7 +25,7 @@ namespace Iidentifii.Forum.Api.EndPoints.Post.Create
         {
             try
             {
-                var postId = _postService.CreatePost(req.SubforumId, req.Title, req.Content, UserId);
+                var postId = _postService.Create(req.SubforumId, req.Title, req.Content, UserId);
                 await SendAsync(new()
                 {
                     Id = postId
