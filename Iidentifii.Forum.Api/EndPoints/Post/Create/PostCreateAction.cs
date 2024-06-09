@@ -19,7 +19,7 @@ namespace Iidentifii.Forum.Api.EndPoints.Post.Create
         public override void Configure()
         {
             Post("/api/post/create");
-            Roles("User", "Moderator");
+            Roles("User", "Moderator", "Owner");
         }
         public override async Task HandleAsync(PostCreateRequest req, CancellationToken ct)
         {

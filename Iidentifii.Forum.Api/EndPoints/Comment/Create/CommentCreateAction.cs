@@ -16,7 +16,7 @@ namespace Iidentifii.Forum.Api.EndPoints.Comment.Create
         public override void Configure()
         {
             Post("/api/comment/create");
-            Roles("User", "Moderator");
+            Roles("User", "Moderator", "Owner");
         }
         public override async Task HandleAsync(CommentCreateRequest req, CancellationToken ct)
         {

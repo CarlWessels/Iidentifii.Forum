@@ -8,6 +8,13 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
+    IF NOT EXISTS (SELECT 1 FROM [Post] WHERE Id = @PostId)
+    BEGIN
+        RAISERROR('Unable to find post', 16, 1);
+        RETURN;
+    END
+
+
     DECLARE @StartRow INT = (@PageNumber - 1) * @PageSize + 1;
     DECLARE @EndRow INT = @PageNumber * @PageSize;
 

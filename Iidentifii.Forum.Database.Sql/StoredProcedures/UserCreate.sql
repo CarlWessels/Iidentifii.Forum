@@ -28,8 +28,19 @@ BEGIN
     
     SET @HashedPassword = HASHBYTES('SHA2_512', @Password + CONVERT(VARCHAR(100), @Salt));
     
+
+	DECLARE @Role VARCHAR(10)
+	IF (SELECT COUNT(1) FROM [User]) < 1
+	BEGIN
+		SET @Role = 'Owner'
+	END
+	ELSE
+	BEGIN
+		SET @Role = 'User'
+	END
+
     INSERT INTO [User] (Name, Email, PasswordHash, Salt, [Role])
-    VALUES (@Name, @Email, @HashedPassword, @Salt, 'User');
+    VALUES (@Name, @Email, @HashedPassword, @Salt, @Role);
     
     SELECT @Id = SCOPE_IDENTITY();
 END

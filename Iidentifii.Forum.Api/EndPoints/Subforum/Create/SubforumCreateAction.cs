@@ -15,7 +15,7 @@ namespace Iidentifii.Forum.Api.EndPoints.Subforum.Create
         public override void Configure()
         {
             Post("/api/subforum/create");
-            Roles("Moderator");
+            Roles("Moderator", "Owner");
         }
 
         public override async Task HandleAsync(SubforumCreateRequest req, CancellationToken ct)

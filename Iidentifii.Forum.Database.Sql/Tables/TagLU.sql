@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[TagLU]
+(
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[Name] VARCHAR(100) NOT NULL,
+	[Description] VARCHAR(1000) NULL
+
+	CONSTRAINT [PK_TagLU] PRIMARY KEY (Id)
+)

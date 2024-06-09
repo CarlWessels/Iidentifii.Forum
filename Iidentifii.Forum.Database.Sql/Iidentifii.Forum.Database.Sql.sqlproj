@@ -73,6 +73,10 @@
     <Build Include="StoredProcedures\PostGet.sql" />
     <Build Include="Tables\Like.sql" />
     <Build Include="StoredProcedures\LikeOrUnlike.sql" />
+    <Build Include="Tables\Tag.sql" />
+    <Build Include="StoredProcedures\TagCreate.sql" />
+    <Build Include="Tables\TagLU.sql" />
+    <Build Include="StoredProcedures\TagLUCreate.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="local.publish.xml" />

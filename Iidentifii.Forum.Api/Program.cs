@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Iidentifii.Forum.Api.MiddleWare;
+using Iidentifii.Forum.Library.Tags;
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
@@ -20,7 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer()
     .AddSwaggerGen(opt =>
     {
-        opt.SwaggerDoc("v1", new OpenApiInfo { Title = "MyAPI", Version = "v1" });
+        opt.SwaggerDoc("v1", new OpenApiInfo { Title = "Iidentifii.Forum.Api", Version = "v1" });
         opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             In = ParameterLocation.Header,
@@ -54,6 +56,7 @@ builder.Services.AddEndpointsApiExplorer()
     .AddScoped<IPostService, PostService>()
     .AddScoped<ICommentService, CommentService>()
     .AddScoped<ILikeService, LikeService>()
+    .AddScoped<ITagService, TagService>()
 
     .AddSingleton<IDbConnectionFactory, DbConnectionFactory>()
     .AddSingleton<ISubforumService, SubformuService>()
@@ -79,7 +82,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
+else
+    ErrorHandlingMiddlewareExtensions.UseErrorHandlingMiddleware(app);
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
