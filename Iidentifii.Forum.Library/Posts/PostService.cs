@@ -40,21 +40,13 @@ namespace Iidentifii.Forum.Library.Posts
             }
         }
 
-        public PostView? Get(int postId, int pageNumber, int pageSize, PostSortingOptions? sortingOptions, SortingDirection sortingDirection, PostFilterOptions? postFilterOptions)
+        public PostView? Get(int postId)
         {
             using (var connection = _dbConnectionFactory.CreateConnection())
             {
-                var sql = "EXEC PostGet @PostId, @PageNumber, @PageSize, @StartDate, @EndDate, @AuthorId, @TagId, @SortBy, @SortOrder, @Output OUTPUT";
+                var sql = "EXEC PostGet @PostId, @Output OUTPUT";
                 var parameters = new DynamicParameters();
                 parameters.Add("PostId", postId);
-                parameters.Add("PageNumber", pageNumber);
-                parameters.Add("PageSize", pageSize);
-                parameters.Add("StartDate", postFilterOptions?.StartDate);
-                parameters.Add("EndDate", postFilterOptions?.EndDate);
-                parameters.Add("AuthorId", postFilterOptions?.AuthorId);
-                parameters.Add("TagId", postFilterOptions?.TagId);
-                parameters.Add("SortBy", sortingOptions);
-                parameters.Add("SortOrder", sortingDirection.ToString().ToUpper(), direction: ParameterDirection.Input);
                 parameters.Add("Output", dbType: DbType.String, size: 4000, direction: ParameterDirection.Output);
                 connection.Execute(sql, parameters);
                 var output = parameters.Get<string>("Output");

@@ -52,7 +52,7 @@ namespace Iidentifii.Forum.Api.EndPoints.Post.Get
 
         public override async Task HandleAsyncImpl(PostGetRequest req, CancellationToken ct)
         {
-            var output = _postService.Get(req.PostId, req.PageNumber, req.PageSize, req.SortingOptions, req.SortingDirection, req.FilterOptions);
+            var output = _postService.Get(req.PostId);
             await SendAsync(new()
             {
                 Data = output
