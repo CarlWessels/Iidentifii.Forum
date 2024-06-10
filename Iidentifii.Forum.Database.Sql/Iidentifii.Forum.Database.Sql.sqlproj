@@ -79,6 +79,7 @@
     <Build Include="StoredProcedures\TagLUCreate.sql" />
     <Build Include="StoredProcedures\PostGetAll.sql" />
     <Build Include="StoredProcedures\ModeratorCreate.sql" />
+    <Build Include="StoredProcedures\SubforumGet.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="local.publish.xml" />

@@ -1,6 +1,8 @@
 ﻿using Dapper;
 using Iidentifii.Forum.Library.Database;
 using Iidentifii.Forum.Library.Models;
+using Iidentifii.Forum.Library.Subforums.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -32,6 +34,24 @@ namespace Iidentifii.Forum.Library.Subforums
                 connection.Execute(sql, parameters);
                 var postId = parameters.Get<int>("Id");
                 return postId;
+            }
+        }
+
+        public List<SubforumView>? GetAll(int pageNumber, int pageSize)
+        {
+            using (var connection = _dbConnectionFactory.CreateConnection())
+            {
+                var sql = "EXEC SubforumGet @PageNumber, @PageSize, @Output OUTPUT";
+                var parameters = new DynamicParameters();
+                parameters.Add("PageNumber", pageNumber);
+                parameters.Add("PageSize", pageSize);
+                parameters.Add("Output", dbType: DbType.String, size: 4000, direction: ParameterDirection.Output);
+                connection.Execute(sql, parameters);
+                var output = parameters.Get<string>("Output");
+
+                var postView = JsonConvert.DeserializeObject<List<SubforumView>>(output);
+
+                return postView;
             }
         }
     }
