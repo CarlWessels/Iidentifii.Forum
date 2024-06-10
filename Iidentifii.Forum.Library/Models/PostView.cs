@@ -15,10 +15,11 @@ namespace Iidentifii.Forum.Library.Models
         public required string PostUser { get; set; }
         public DateTime PostCreationDate { get; set; }
         public int LikeCount { get; set; }
-        public List<CommentVoew> Comments { get; set; } = new();
+        public List<CommentView> Comments { get; set; } = new();
+        public List<TagLU> Tags { get; set; } = new();
     }
 
-    public class CommentVoew
+    public class CommentView
     {
         public int CommentId { get; set; }
         public required string Comment { get; set; }

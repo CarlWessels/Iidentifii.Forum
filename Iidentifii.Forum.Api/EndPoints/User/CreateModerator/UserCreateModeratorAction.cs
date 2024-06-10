@@ -1,5 +1,4 @@
-﻿
-using Iidentifii.Forum.Library.Auth;
+﻿using Iidentifii.Forum.Library.Auth;
 
 namespace Iidentifii.Forum.Api.EndPoints.User.CreateModerator
 {
@@ -16,6 +15,13 @@ namespace Iidentifii.Forum.Api.EndPoints.User.CreateModerator
         {
             Put("/api/user/createmoderator");
             Roles("Owner");
+            Summary(s => {
+                s.Summary = "Create a Moderator";
+                s.Description = "This endpoint allows owners to promote a user to moderator status.";
+                s.ExampleRequest = new UserCreateModeratorRequest { UserId = 3 };
+                s.Responses[200] = "The user was promoted to moderator successfully.";
+                s.Responses[403] = "The user is not authorized to perform this action.";
+            });
         }
 
         public override async Task HandleAsyncImpl(UserCreateModeratorRequest req, CancellationToken ct)

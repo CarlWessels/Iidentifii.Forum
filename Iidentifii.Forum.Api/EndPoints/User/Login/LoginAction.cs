@@ -1,5 +1,4 @@
 ﻿using FastEndpoints;
-using Iidentifii.Forum.Api.EndPoints.POC;
 using Iidentifii.Forum.Library.Auth;
 
 namespace Iidentifii.Forum.Api.EndPoints.User.Login
@@ -19,6 +18,13 @@ namespace Iidentifii.Forum.Api.EndPoints.User.Login
         {
             Get("/api/user/login");
             AllowAnonymous();
+            Summary(s => {
+                s.Summary = "User Login";
+                s.Description = "This endpoint allows users to log in and obtain an authentication token.";
+                s.ExampleRequest = new LoginRequest { Email = "user@example.com", Password = "password123" };
+                s.Responses[200] = "The user was logged in successfully.";
+                s.Responses[404] = "Incorrect username or password.";
+            });
         }
 
         public override async Task HandleAsyncImpl(LoginRequest req, CancellationToken ct)
@@ -26,7 +32,7 @@ namespace Iidentifii.Forum.Api.EndPoints.User.Login
             var user = _userManager.Login(req.Email, req.Password);
             if (user?.Item1 == null)
             {
-                AddError("Incorrect username of password");
+                AddError("Incorrect username or password");
                 await SendErrorsAsync(404, ct);
                 return;
             }

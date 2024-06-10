@@ -26,10 +26,18 @@ BEGIN
 			p.Content,
 			pu.Email AS PostUser,
 			p.CreationDate AS PostCreationDate,
+			(
+				SELECT tlu.Name, tlu.Id, tlu.Description
+				FROM dbo.Tag t
+				INNER JOIN dbo.TagLU tlu ON t.TagId = tlu.Id
+				WHERE t.PostId = p.Id
+				FOR JSON PATH
+			) AS Tags,
 			LikeCount = (SELECT COUNT(1) FROM dbo.[Like] c WHERE c.PostId = p.Id)
 		FROM dbo.Post p
 		INNER JOIN dbo.Subforum sf ON p.SubforumId = sf.Id
 		INNER JOIN dbo.[User] pu ON p.UserId = pu.Id
+
 		WHERE 
 			(@StartDate IS NULL OR p.CreationDate >= @StartDate)
 			AND (@EndDate IS NULL OR p.CreationDate <= @EndDate)

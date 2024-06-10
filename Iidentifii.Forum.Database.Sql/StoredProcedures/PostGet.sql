@@ -47,7 +47,14 @@ BEGIN
 				OFFSET @StartRow - 1 ROWS
 				FETCH NEXT @PageSize ROWS ONLY
 				FOR JSON PATH
-			) AS Comments
+			) AS Comments,
+			(
+				SELECT tlu.Name, tlu.Id, tlu.Description
+				FROM dbo.Tag t
+				INNER JOIN dbo.TagLU tlu ON t.TagId = tlu.Id
+				WHERE t.PostId = p.Id
+				FOR JSON PATH
+			) AS Tags
 		FROM dbo.Post p
 		INNER JOIN dbo.Subforum sf ON p.SubforumId = sf.Id
 		INNER JOIN dbo.[User] pu ON p.UserId = pu.Id

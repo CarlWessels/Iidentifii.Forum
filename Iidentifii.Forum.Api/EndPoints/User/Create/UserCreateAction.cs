@@ -16,8 +16,13 @@ namespace Iidentifii.Forum.Api.EndPoints.User.Create
         {
             Post("/api/user/create");
             AllowAnonymous();
+            Summary(s => {
+                s.Summary = "Create a User";
+                s.Description = "This endpoint allows users to create a new account.";
+                s.ExampleRequest = new UserCreateRequest { Name = "User Name", Email = "user@example.com", Password = "password123" };
+                s.Responses[200] = "The user account was created successfully.";
+            });
         }
-       
 
         public override async Task HandleAsyncImpl(UserCreateRequest req, CancellationToken ct)
         {
