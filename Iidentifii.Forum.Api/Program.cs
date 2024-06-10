@@ -12,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using Iidentifii.Forum.Api.MiddleWare;
 using Iidentifii.Forum.Library.Tags;
+using FastEndpoints.Swagger;
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
@@ -19,38 +20,13 @@ var configuration = new ConfigurationBuilder()
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer()
-    .AddSwaggerGen(opt =>
-    {
-        opt.SwaggerDoc("v1", new OpenApiInfo { Title = "Iidentifii.Forum.Api", Version = "v1" });
-        opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-        {
-            In = ParameterLocation.Header,
-            Description = "Please enter token",
-            Name = "Authorization",
-            Type = SecuritySchemeType.Http,
-            BearerFormat = "JWT",
-            Scheme = "bearer"
-        });
-
-        opt.AddSecurityRequirement(new OpenApiSecurityRequirement
-        {
-            {
-                new OpenApiSecurityScheme
-                {
-                    Reference = new OpenApiReference
-                    {
-                        Type=ReferenceType.SecurityScheme,
-                        Id="Bearer"
-                    }
-                },
-                Array.Empty<string>()
-            }
-        });
-    })
+builder.Services
+    .AddEndpointsApiExplorer()
+    .AddSwaggerGen()
+    .SwaggerDocument()
     .AddAuthorization()
     .AddFastEndpoints()
-    
+
     .AddScoped<ITokenService, TokenService>()
     .AddScoped<IUserManager, UserManager>()
     .AddScoped<IPostService, PostService>()
@@ -77,19 +53,20 @@ builder.Services.AddEndpointsApiExplorer()
     });
 
 var app = builder.Build();
+app.UseFastEndpoints();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerGen();
     app.UseDeveloperExceptionPage();
 }
 else
     ErrorHandlingMiddlewareExtensions.UseErrorHandlingMiddleware(app);
 
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseFastEndpoints();
+
 
 app.Run();
