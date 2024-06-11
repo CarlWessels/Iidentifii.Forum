@@ -10,6 +10,15 @@ iiDENTIfii.Forum is a .NET application designed to serve as the backend for a fo
 * Create a User: Use the `user\create` endpoint. The first user created will automatically receive the role of Owner. All subsequent users will only have the User role.
 * Promote to Moderator: Use the `use\createmoderator` endpoint.
 Login: Use the `use\login` endpoint to receive a bearer token. This token must be added to your headers for all endpoints requiring authentication.
+
+All users in the seeded database have a password of "password"
+Some accounts :
+* Email	Role
+* john.doe@example.com	Owner
+* jane.smith@example.com	User
+* alice.johnson@example.com	User
+* bob.brown@example.com	Moderator
+* charlie.black@example.com	User
 ## Subforums
 * Create a Subforum: Use the `subforum\create` endpoint.
 * Retrieve Subforums: Use the `subforum\get` endpoint to retrieve all subforums.
